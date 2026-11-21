@@ -333,6 +333,9 @@ const gotSingleInstanceLock = app.requestSingleInstanceLock();
 if (!gotSingleInstanceLock) {
   app.quit();
 } else {
+  if (process.platform === 'win32') {
+    app.setAppUserModelId('com.aurakinetic.desktop');
+  }
   app.on('second-instance', () => {
     if (!mainWindow) return;
     if (mainWindow.isMinimized()) mainWindow.restore();

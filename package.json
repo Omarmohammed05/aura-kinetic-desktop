@@ -1,6 +1,6 @@
 {
   "name": "aura-kinetic-desktop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Aura Kinetic ERP — Electron desktop shell for macOS and Windows",
   "main": "main.js",
@@ -49,7 +49,8 @@
       }
     },
     "dmg": {
-      "title": "Aura Kinetic"
+      "title": "Aura Kinetic",
+      "format": "UDZO"
     },
     "win": {
       "icon": "build/icon.png",
@@ -70,6 +71,13 @@
     "linux": {
       "icon": "build/icon.png",
       "category": "Office",
+      "desktop": {
+        "entry": {
+          "Name": "Aura Kinetic ERP",
+          "Comment": "Aura Kinetic Gym ERP Desktop",
+          "Categories": "Office;"
+        }
+      },
       "target": [
         {
           "target": "AppImage",
