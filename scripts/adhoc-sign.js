@@ -7,10 +7,19 @@ const { execFileSync } = require('node:child_process');
  * electron-builder afterPack hook.
  * Applies an ad-hoc signature on macOS builds when no Apple Developer certificate
  * (CSC_LINK) is configured so the universal binary launches on Apple Silicon.
+ *
+ * Skips intermediate universal temp directories (*-x64-temp / *-arm64-temp) so
+ * @electron/universal can merge identical _CodeSignature resources first, then
+ * signs the final merged .app bundle.
  */
 exports.default = async function adhocSign(context) {
   if (context.electronPlatformName !== 'darwin') {
     console.log(`[adhoc-sign] Skipping on non-macOS platform (${context.electronPlatformName}).`);
+    return;
+  }
+
+  if (path.basename(context.appOutDir).endsWith('-temp')) {
+    console.log(`[adhoc-sign] Skipping intermediate universal temp dir: ${context.appOutDir}`);
     return;
   }
 
