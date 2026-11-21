@@ -24,6 +24,10 @@ jobs:
             script: dist:win
             artifact_name: win-installer
             pattern: dist/*.exe
+          - os: ubuntu-latest
+            script: dist:linux
+            artifact_name: linux-installer
+            pattern: dist/*.AppImage
 
     steps:
       - name: Checkout repository
@@ -82,7 +86,7 @@ jobs:
         working-directory: release-artifacts
         run: |
           ls -la
-          sha256sum *.dmg *.exe > SHA256SUMS.txt
+          sha256sum *.dmg *.exe *.AppImage > SHA256SUMS.txt
           cat SHA256SUMS.txt
 
       - name: Create or update GitHub Release
@@ -93,4 +97,5 @@ jobs:
           files: |
             release-artifacts/*.dmg
             release-artifacts/*.exe
+            release-artifacts/*.AppImage
             release-artifacts/SHA256SUMS.txt

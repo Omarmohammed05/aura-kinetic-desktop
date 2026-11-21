@@ -13,8 +13,11 @@ test('release.yml defines v* tag trigger, write perms, mac+win matrix, tag check
   assert.match(src, /contents:\s*write/);
   assert.equal(src.includes('macos-latest'), true);
   assert.equal(src.includes('windows-latest'), true);
+  assert.equal(src.includes('ubuntu-latest'), true);
   assert.equal(src.includes('dist:mac'), true);
   assert.equal(src.includes('dist:win'), true);
+  assert.equal(src.includes('dist:linux'), true);
+  assert.equal(src.includes('*.AppImage'), true);
   assert.equal(src.includes('if-no-files-found: error'), true);
   assert.equal(src.includes('SHA256SUMS.txt'), true);
   assert.equal(src.includes('generate_release_notes: true'), true);
