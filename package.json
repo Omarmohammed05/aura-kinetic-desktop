@@ -1,0 +1,70 @@
+{
+  "name": "aura-kinetic-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aura Kinetic ERP — Electron desktop shell for macOS and Windows",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:mac": "electron-builder --mac --universal --publish never",
+    "dist:win": "electron-builder --win --x64 --publish never",
+    "make-icon": "node scripts/make-icon.js",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "electron": "^45.4.1",
+    "electron-builder": "^26.18.0",
+    "sharp": "^0.35.5"
+  },
+  "build": {
+    "appId": "com.aurakinetic.desktop",
+    "productName": "Aura Kinetic",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "offline.html",
+      "config.json",
+      "lib/**",
+      "build/**"
+    ],
+    "artifactName": "AuraKinetic-${version}-${os}-${arch}.${ext}",
+    "afterPack": "./scripts/adhoc-sign.js",
+    "mac": {
+      "category": "public.app-category.business",
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "extendInfo": {
+        "NSCameraUsageDescription": "Aura Kinetic uses the camera to scan member QR codes."
+      }
+    },
+    "dmg": {
+      "title": "Aura Kinetic"
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
